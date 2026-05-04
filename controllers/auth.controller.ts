@@ -6,7 +6,8 @@ import {
   getUserProfile,
   requestPasswordReset,
   resetUserPassword,
-  changeUserPassword
+  changeUserPassword,
+  getAllUsers
 } from '../services/auth.service';
 
 export const register = async (req: Request, res: Response): Promise<void> => {
@@ -124,5 +125,18 @@ export const changePassword = async (req: AuthenticatedRequest, res: Response): 
     res.status(200).json({ message: 'Đổi mật khẩu thành công' });
   } catch (error: any) {
     res.status(401).json({ message: error.message || 'Lỗi server' });
+  }
+};
+
+export const getAllUsersController = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit as string) : undefined;
+    const skip = req.query.skip ? parseInt(req.query.skip as string) : undefined;
+
+    const users = await getAllUsers(limit, skip);
+
+    res.status(200).json({ users });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message || 'Lỗi server' });
   }
 };

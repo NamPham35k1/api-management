@@ -5,7 +5,8 @@ import {
   createUser, 
   updateUser, 
   findUserByResetToken,
-  findUserById 
+  findUserById,
+  getAllUsers as getAllUsersRepo
 } from '../repositories/user.repository';
 import { IUser, UserResponse } from '../models/user.model';
 
@@ -62,6 +63,11 @@ export const getUserProfile = async (userId: string) => {
   }
 
   return userToResponse(user);
+};
+
+export const getAllUsers = async (limit?: number, skip?: number): Promise<UserResponse[]> => {
+  const users = await getAllUsersRepo(limit, skip);
+  return users.map(userToResponse);
 };
 
 export const requestPasswordReset = async (email: string) => {

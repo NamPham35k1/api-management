@@ -5,7 +5,8 @@ import {
   getProfile,
   forgotPassword,
   resetPassword,
-  changePassword
+  changePassword,
+  getAllUsersController
 } from '../controllers/auth.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import {
@@ -25,5 +26,6 @@ router.post('/reset-password', validateResetPassword, resetPassword);
 
 router.get('/profile', authMiddleware, getProfile);
 router.post('/change-password', authMiddleware, validateChangePassword, changePassword);
+router.get('/users', authMiddleware, getAllUsersController);
 
 export default router;

@@ -15,6 +15,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/ping", (req, res) => {
+  res.send("ok");
+});
+
 app.use('/api', apiRoutes);
 
 app.use(notFoundHandler);

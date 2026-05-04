@@ -6,13 +6,7 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "build": "tsc",
-    "start": "node dist/index.js",
-    "seed": "ts-node scripts/seed.ts",
-    "seed:local": "ts-node scripts/seed-local.ts",
-    "check-user": "ts-node scripts/check-user.ts",
-    "debug-db": "ts-node scripts/debug-db.ts",
-    "check-email": "ts-node scripts/check-email.ts",
-    "clean-seed": "ts-node scripts/clean-and-seed.ts"
+    "start": "node dist/index.js"
   },
   "keywords": [],
   "author": "",
