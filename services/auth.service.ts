@@ -53,7 +53,8 @@ export const loginUser = async (email: string, password: string) => {
 
   return {
     accessToken,
-    userId: user._id.toString()
+    userId: user._id.toString(),
+    name: user.name
   };
 };
 
