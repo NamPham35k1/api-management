@@ -52,7 +52,8 @@ export const loginUser = async (email: string, password: string) => {
   const accessToken = generateToken(user._id.toString());
 
   return {
-    accessToken
+    accessToken,
+    userId: user._id.toString()
   };
 };
 
