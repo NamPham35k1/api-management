@@ -49,6 +49,50 @@ MONGODB_URI=mongodb://localhost:27017/api-management
 NODE_ENV=development
 ```
 
+## 🏗️ Chạy dự án
+
+### Development:
+```bash
+npm run dev
+```
+
+### Production:
+```bash
+npm run build
+npm start
+```
+
+## 🚀 Deploy lên Render
+
+1. **Push code lên GitHub**
+
+2. **Tạo service trên Render:**
+   - Chọn "Web Service"
+   - Connect GitHub repository
+   - Chọn branch `main`
+
+3. **Cấu hình Build & Deploy:**
+   - **Build Command:** `npm install && npm run build`
+   - **Start Command:** `npm start`
+
+4. **Environment Variables:**
+   ```
+   NODE_ENV=production
+   PORT=10000
+   JWT_SECRET=<your-secret-key>
+   MONGODB_URI=<your-mongodb-connection-string>
+   ```
+
+5. **Deploy!** 🎉
+
+## 📚 API Documentation
+
+Xem chi tiết API tại [docs/API.md](docs/API.md)
+
+## 🧪 Test API
+
+Xem hướng dẫn test tại [docs/TEST_API.md](docs/TEST_API.md)
+
 ## 💻 Chạy ứng dụng
 
 ### Development mode (với nodemon):
