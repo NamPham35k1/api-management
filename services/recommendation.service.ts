@@ -256,13 +256,14 @@ export const generateHybridRecommendations = async (
   }
 };
 
-export const getRecommendationsForUser = async (userId: string, limit: number = 20) => {
+export const getRecommendationsForUser = async (userId: string, limit: number = 20, forceRefresh: boolean = false) => {
   try {
     // Kiểm tra recommendations mới nhất
     const existingRecommendations = await findRecommendationsByUserId(userId, limit);
 
-    // Nếu không có hoặc quá cũ (> 24h), generate lại
+    // Nếu forceRefresh = true, hoặc không có, hoặc quá cũ (> 24h), generate lại
     if (
+      forceRefresh ||
       existingRecommendations.length === 0 ||
       (existingRecommendations.length > 0 &&
         Date.now() - existingRecommendations[0].createdAt.getTime() > 24 * 60 * 60 * 1000)

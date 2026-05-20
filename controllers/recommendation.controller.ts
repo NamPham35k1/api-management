@@ -10,13 +10,14 @@ export const getRecommendationsController = async (
   try {
     const userId = req.userId;
     const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+    const forceRefresh = req.query.force === 'true';
 
     if (!userId) {
       res.status(401).json({ message: 'Unauthorized' });
       return;
     }
 
-    const recommendations = await getRecommendationsForUser(userId, limit);
+    const recommendations = await getRecommendationsForUser(userId, limit, forceRefresh);
 
     // Lấy thông tin chi tiết channel
     const enrichedRecommendations = await Promise.all(

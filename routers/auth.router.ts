@@ -6,7 +6,8 @@ import {
   forgotPassword,
   resetPassword,
   changePassword,
-  getAllUsersController
+  getAllUsersController,
+   verifyOtpController
 } from '../controllers/auth.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import {
@@ -20,6 +21,7 @@ import {
 const router = Router();
 
 router.post('/register', validateRegister, register);
+router.post('/register/verify', verifyOtpController);  
 router.post('/login', validateLogin, login);
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 router.post('/reset-password', validateResetPassword, resetPassword);

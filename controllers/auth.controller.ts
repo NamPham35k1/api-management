@@ -7,9 +7,11 @@ import {
   requestPasswordReset,
   resetUserPassword,
   changeUserPassword,
-  getAllUsers
+  getAllUsers,
+  verifyOtp
 } from '../services/auth.service';
 
+// auth.controller.ts - hàm register
 export const register = async (req: Request, res: Response): Promise<void> => {
   try {
     const { email, password, name } = req.body;
@@ -21,10 +23,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     const result = await registerUser(email, password, name);
 
-    res.status(201).json({
-      message: 'Đăng ký thành công',
-      ...result
-    });
+    res.status(201).json(result); // bỏ message trùng, trả result thẳng
   } catch (error: any) {
     res.status(400).json({ message: error.message || 'Lỗi server' });
   }
@@ -138,5 +137,21 @@ export const getAllUsersController = async (req: AuthenticatedRequest, res: Resp
     res.status(200).json({ users });
   } catch (error: any) {
     res.status(500).json({ message: error.message || 'Lỗi server' });
+  }
+};
+export const verifyOtpController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, otp } = req.body;
+
+    if (!email || !otp) {
+      res.status(400).json({ message: 'Vui lòng nhập email và OTP' });
+      return;
+    }
+
+    const result = await verifyOtp(email, otp);
+
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message || 'Lỗi server' });
   }
 };
