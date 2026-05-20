@@ -1,5 +1,10 @@
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
+import { Agent } from 'https';
+import dns from 'dns';
+
+// Ép dùng IPv4
+dns.setDefaultResultOrder('ipv4first');
 
 const CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
 const CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
@@ -27,6 +32,10 @@ export const sendOtpEmail = async (toEmail: string, otp: string) => {
       refreshToken: REFRESH_TOKEN,
       accessToken: accessToken.token!,
     },
+    // Ép IPv4
+    tls: {
+      rejectUnauthorized: false
+    }
   });
 
   await transporter.sendMail({
