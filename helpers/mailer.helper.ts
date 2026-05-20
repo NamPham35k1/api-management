@@ -3,10 +3,13 @@ import dns from 'dns';
 
 dns.setDefaultResultOrder('ipv4first');
 
-const SENDER_EMAIL = process.env.SENDER_EMAIL!;
-const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD!;
-
 export const sendOtpEmail = async (toEmail: string, otp: string) => {
+  const SENDER_EMAIL = process.env.SENDER_EMAIL!;
+  const GMAIL_APP_PASSWORD = process.env.GMAIL_APP_PASSWORD!;
+
+  console.log('EMAIL:', SENDER_EMAIL);
+  console.log('PASS:', GMAIL_APP_PASSWORD);
+
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 587,
