@@ -1,0 +1,45 @@
+{
+  "info": {
+    "name": "API Management - Channel Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Channel",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_JWT_TOKEN_HERE"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"channelId\": \"VTV1\",\n  \"name\": \"VTV1 - Kênh truyền hình quốc gia\",\n  \"category\": \"News\",\n  \"logo\": \"https://example.com/vtv1-logo.png\",\n  \"streamUrl\": \"https://example.com/vtv1-stream.m3u8\",\n  \"country\": \"Vietnam\",\n  \"language\": \"Vietnamese\",\n  \"isGlobal\": true\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/channels",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "channels"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000"
+    }
+  ]
+}

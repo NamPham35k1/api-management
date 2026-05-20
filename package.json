@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "nodemon index.ts",
     "build": "tsc",
-    "start": "node start.js"
+    "start": "node start.js",
+    "seed": "ts-node scripts/seed.ts",
+    "seed:recommendation": "ts-node scripts/seed-recommendation.ts"
   },
   "keywords": [],
   "author": "",
