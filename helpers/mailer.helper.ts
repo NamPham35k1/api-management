@@ -25,3 +25,10 @@ export const sendOtpEmail = async (toEmail: string, otp: string) => {
     console.error(`Lỗi gửi email tới ${toEmail}:`, error);
   }
 };
+transporter.verify((error, success) => {
+  if (error) {
+    console.error('Gmail bị chặn:', error);
+  } else {
+    console.log(' Gmail kết nối thành công, sẵn sàng gửi mail');
+  }
+});
