@@ -1,12 +1,27 @@
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Gọi biến từ file .env
+const EMAIL_USER = process.env.SENDER_EMAIL;
+const EMAIL_PASS = process.env.GMAIL_APP_PASSWORD; 
+
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: EMAIL_USER,
+    pass: EMAIL_PASS,
+  },
+});
 
 export const sendOtpEmail = async (toEmail: string, otp: string) => {
-  await resend.emails.send({
-    from: 'onboarding@resend.dev',
-    to: toEmail,
-    subject: 'Mã xác thực OTP',
-    html: `<h2>Mã OTP của bạn: <b>${otp}</b></h2><p>Mã có hiệu lực trong 5 phút.</p>`,
-  });
+  try {
+    await transporter.sendMail({
+      from: `"Nam API App" <${EMAIL_USER}>`, 
+      to: toEmail, 
+      subject: 'Mã xác thực OTP',
+      html: `<h2>Mã OTP của bạn: <b style="color: blue;">${otp}</b></h2><p>Mã có hiệu lực trong 5 phút.</p>`,
+    });
+    console.log(`Đã gửi OTP thành công tới: ${toEmail}`);
+  } catch (error) {
+    console.error(`Lỗi gửi email tới ${toEmail}:`, error);
+  }
 };
