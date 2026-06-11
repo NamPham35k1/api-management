@@ -7,7 +7,9 @@ import {
   resetPassword,
   changePassword,
   getAllUsersController,
-   verifyOtpController
+  verifyOtpController,
+  requestForgotOtpController,       
+  resetPasswordWithOtpController
 } from '../controllers/auth.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
 import {
@@ -25,6 +27,8 @@ router.post('/register/verify', verifyOtpController);
 router.post('/login', validateLogin, login);
 router.post('/forgot-password', validateForgotPassword, forgotPassword);
 router.post('/reset-password', validateResetPassword, resetPassword);
+router.post('/forgot-password/send-otp', requestForgotOtpController);
+router.post('/forgot-password/reset', resetPasswordWithOtpController);
 
 router.get('/profile', authMiddleware, getProfile);
 router.post('/change-password', authMiddleware, validateChangePassword, changePassword);

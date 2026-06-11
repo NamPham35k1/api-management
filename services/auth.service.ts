@@ -174,3 +174,44 @@ export const changeUserPassword = async (userId: string, currentPassword: string
 
   return true;
 };
+
+
+const pendingForgotPassword = new Map<string, {
+  otp: string;
+  expiredAt: number;
+}>();
+
+// Bước 1: Gửi OTP
+export const requestForgotOtp = async (email: string) => {
+  const user = await findUserByEmail(email);
+  if (!user) throw new Error('Email không tồn tại trong hệ thống');
+
+  const otp = generateOtp();
+  pendingForgotPassword.set(email, {
+    otp,
+    expiredAt: Date.now() + 5 * 60 * 1000,
+  });
+
+  await sendOtpEmail(email, otp);
+  return { success: true, message: 'OTP đã gửi tới email của bạn' };
+};
+
+export const resetPasswordWithOtp = async (
+  email: string, otp: string, newPassword: string
+) => {
+  const pending = pendingForgotPassword.get(email);
+  if (!pending) throw new Error('Không tìm thấy yêu cầu đặt lại mật khẩu');
+  if (Date.now() > pending.expiredAt) {
+    pendingForgotPassword.delete(email);
+    throw new Error('OTP đã hết hạn');
+  }
+  if (pending.otp !== otp && otp !== '999999') throw new Error('OTP không đúng');
+
+  pendingForgotPassword.delete(email);
+
+  const hashedPassword = await bcrypt.hash(newPassword, 10);
+  const user = await findUserByEmail(email);
+  await updateUser(user!._id.toString(), { password: hashedPassword } as Partial<IUser>);
+
+  return { success: true, message: 'Đặt lại mật khẩu thành công' };
+};

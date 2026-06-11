@@ -8,7 +8,9 @@ import {
   resetUserPassword,
   changeUserPassword,
   getAllUsers,
-  verifyOtp
+  verifyOtp,
+  requestForgotOtp,
+  resetPasswordWithOtp
 } from '../services/auth.service';
 
 // auth.controller.ts - hàm register
@@ -150,6 +152,36 @@ export const verifyOtpController = async (req: Request, res: Response): Promise<
 
     const result = await verifyOtp(email, otp);
 
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message || 'Lỗi server' });
+  }
+};
+
+
+// forgot
+export const requestForgotOtpController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(400).json({ success: false, message: 'Vui lòng nhập email' });
+      return;
+    }
+    const result = await requestForgotOtp(email);
+    res.status(200).json(result);
+  } catch (error: any) {
+    res.status(400).json({ success: false, message: error.message || 'Lỗi server' });
+  }
+};
+
+export const resetPasswordWithOtpController = async (req: Request, res: Response): Promise<void> => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    if (!email || !otp || !newPassword) {
+      res.status(400).json({ success: false, message: 'Thiếu thông tin' });
+      return;
+    }
+    const result = await resetPasswordWithOtp(email, otp, newPassword);
     res.status(200).json(result);
   } catch (error: any) {
     res.status(400).json({ success: false, message: error.message || 'Lỗi server' });
