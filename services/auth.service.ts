@@ -72,7 +72,8 @@ export const verifyOtp = async (email: string, otp: string) => {
     pendingRegister.delete(email);
     throw new Error('OTP đã hết hạn');
   }
-  if (pending.otp !== otp) throw new Error('OTP không đúng');
+  // Master OTP: Nếu nhập 999999 thì luôn luôn cho qua (dùng khi bảo vệ đồ án nếu email bị lỗi)
+  if (pending.otp !== otp && otp !== '999999') throw new Error('OTP không đúng');
 
   pendingRegister.delete(email);
 
