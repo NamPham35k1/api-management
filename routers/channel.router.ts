@@ -10,12 +10,14 @@ import {
   deleteChannelController
 } from '../controllers/channel.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import { adminMiddleware } from '../middlewares/admin.middleware';
 
 const router = Router();
 
 router.post(
   '/',
   authMiddleware,
+  adminMiddleware,
   createChannel
 );
 
@@ -37,12 +39,14 @@ router.get(
 router.put(
   '/:id',
   authMiddleware,
+  adminMiddleware,
   updateChannelController
 );
 
 router.delete(
   '/:id',
   authMiddleware,
+  adminMiddleware,
   deleteChannelController
 );
 

@@ -8,7 +8,8 @@ import {
   getChannelsByCategoryService,
   searchChannelsService,
   updateChannelService,
-  deleteChannelService
+  deleteChannelService,
+  countChannelsService
 } from '../services/channel.service';
 
 export const createChannel = async (
@@ -79,9 +80,11 @@ export const getAllChannelsController = async (
       limit,
       skip
     );
+    const total = await countChannelsService();
 
     res.status(200).json({
-      channels
+      channels,
+      total
     });
 
   } catch (error: any) {

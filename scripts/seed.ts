@@ -24,7 +24,8 @@ const seedData = async () => {
     const testUser = await User.create({
       email: 'test@example.com',
       password: hashedPassword,
-      name: 'Test User'
+      name: 'Test Admin',
+      role: 'admin'
     });
 
     console.log('Đã tạo user test:');

@@ -9,9 +9,12 @@ import {
   getAllUsersController,
   verifyOtpController,
   requestForgotOtpController,       
-  resetPasswordWithOtpController
+  resetPasswordWithOtpController,
+  updateUserController,
+  deleteUserController
 } from '../controllers/auth.controller';
 import { authMiddleware } from '../middlewares/auth.middleware';
+import { adminMiddleware } from '../middlewares/admin.middleware';
 import {
   validateRegister,
   validateLogin,
@@ -32,6 +35,10 @@ router.post('/forgot-password/reset', resetPasswordWithOtpController);
 
 router.get('/profile', authMiddleware, getProfile);
 router.post('/change-password', authMiddleware, validateChangePassword, changePassword);
-router.get('/users', authMiddleware, getAllUsersController);
+
+// Admin routes
+router.get('/users', authMiddleware, adminMiddleware, getAllUsersController);
+router.put('/users/:id', authMiddleware, adminMiddleware, updateUserController);
+router.delete('/users/:id', authMiddleware, adminMiddleware, deleteUserController);
 
 export default router;

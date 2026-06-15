@@ -4,6 +4,7 @@ export interface IUser extends Document {
   email: string;
   password: string;
   name: string;
+  role: 'user' | 'admin';
   resetToken?: string;
   resetTokenExpiry?: Date;
   createdAt: Date;
@@ -14,6 +15,7 @@ export interface UserResponse {
   id: string;
   email: string;
   name: string;
+  role: string;
   createdAt: Date;
 }
 
@@ -38,6 +40,11 @@ const userSchema = new Schema<IUser>(
       trim: true,
       minlength: [2, 'Tên phải có ít nhất 2 ký tự']
     },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user'
+    },
     resetToken: {
       type: String,
       default: undefined
@@ -59,6 +66,7 @@ userSchema.methods.toResponse = function(): UserResponse {
     id: this._id.toString(),
     email: this.email,
     name: this.name,
+    role: this.role,
     createdAt: this.createdAt
   };
 };

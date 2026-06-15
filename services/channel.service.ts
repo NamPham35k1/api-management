@@ -7,7 +7,8 @@ import {
   getChannelsByCategory,
   searchChannels,
   updateChannel,
-  deleteChannel
+  deleteChannel,
+  countChannels
 } from '../repositories/channel.repository';
 
 import { IChannel } from '../models/channel.model';
@@ -42,6 +43,10 @@ export const getChannels = async (
 ): Promise<IChannel[]> => {
 
   return await getAllChannels(limit, skip);
+};
+
+export const countChannelsService = async (): Promise<number> => {
+  return await countChannels();
 };
 
 export const getChannelsByCategoryService = async (

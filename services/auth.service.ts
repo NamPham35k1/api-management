@@ -33,6 +33,7 @@ const userToResponse = (user: IUser): UserResponse => ({
   id: user._id.toString(),
   email: user.email,
   name: user.name,
+  role: user.role,
   createdAt: user.createdAt
 });
 
@@ -123,6 +124,8 @@ export const getAllUsers = async (limit?: number, skip?: number): Promise<UserRe
   const users = await getAllUsersRepo(limit, skip);
   return users.map(userToResponse);
 };
+
+export { countUsers, updateUser, deleteUser } from '../repositories/user.repository';
 
 // -------------------------
 // Password
