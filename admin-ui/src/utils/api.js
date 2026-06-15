@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-// Thay đổi baseURL thành url thực tế của Backend khi deploy
-const API_URL = 'http://localhost:3000/api';
+// URL server đã deploy lên Render
+// Nếu muốn test local thì đổi lại thành: 'http://localhost:3000/api'
+const API_URL = 'https://api-management-v5ez.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL,
