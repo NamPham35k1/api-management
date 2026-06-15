@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// URL server đã deploy lên Render
-// Nếu muốn test local thì đổi lại thành: 'http://localhost:3000/api'
-const API_URL = 'https://api-management-v5ez.onrender.com/api';
+// URL được đọc từ file .env (biến VITE_API_URL)
+// Để đổi môi trường: chỉ cần sửa file .env, không cần sửa code này
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const api = axios.create({
   baseURL: API_URL,
